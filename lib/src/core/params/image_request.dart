@@ -1,12 +1,12 @@
 import '../utils/constants.dart';
 
-class ArticlesRequestParams {
+class ImagesRequestParams {
   final String apiKey;
   final String? query;
   final int page;
   final int pageSize;
 
-  const ArticlesRequestParams({
+  const ImagesRequestParams({
     this.apiKey = kApiKey,
     this.query,
     this.page = 1,
