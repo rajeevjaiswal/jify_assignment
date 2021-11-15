@@ -44,53 +44,46 @@ class RemoteImagesBloc
 
   Stream<RemoteImagesState> _getRemoteImages(GetImages event) async* {
     yield* runBlocProcess(() async* {
-      try {
-        if (event.query.isEmpty) {
-          _images.clear();
-          _page = 1;
-          yield (const RemoteImagesInitial());
+      if (event.query.isEmpty) {
+        _images.clear();
+        _page = 1;
+        yield (const RemoteImagesInitial());
+      } else {
+        if (!event.isLoadMore) {
+          yield (RemoteImagesLoading());
         } else {
-          if (!event.isLoadMore) {
-            yield (RemoteImagesLoading());
-          } else {
-            yield RemoteImagesDone(_images, false);
-          }
-
-          final dataState = await _getImagesUseCase(
-              params: ImagesRequestParams(
-            page: _page,
-            query: event.query,
-          ));
-
-          if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-            final images = dataState.data;
-            // final noMoreData = event.isLoadMore ? true : images!.length < _pageSize;
-
-            final hasReachedEnd = true;
-            if (event.isLoadMore) {
-              _page++;
-            } else {
-              _images.clear();
-              _page = 1;
-            }
-
-            print("call1");
-            if (!event.isLoadMore && images!.isEmpty) {
-              print("call2");
-
-              yield RemoteImagesEmpty("No data found");
-            } else {
-              _images.addAll(images!);
-
-              yield RemoteImagesDone(_images, hasReachedEnd);
-            }
-          }
-          if (dataState is DataFailed) {
-            yield RemoteImagesError(dataState.error!);
-          }
+          yield RemoteImagesDone(_images, false);
         }
-      } catch (_) {
-        print("errror ${_.toString()}");
+
+        final dataState = await _getImagesUseCase(
+            params: ImagesRequestParams(
+          page: _page,
+          query: event.query,
+        ));
+        if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+          final images = dataState.data;
+          // final noMoreData = event.isLoadMore ? true : images!.length < _pageSize;
+
+          final hasReachedEnd = true;
+          if (event.isLoadMore) {
+            _page++;
+          } else {
+            _images.clear();
+            _page = 1;
+          }
+
+          if (!event.isLoadMore && images!.isEmpty) {
+            yield RemoteImagesEmpty("No data found");
+          } else {
+            _images.addAll(images!);
+            yield RemoteImagesDone(_images, hasReachedEnd);
+          }
+        } else {
+          yield RemoteImagesEmpty("No data found");
+        }
+        if (dataState is DataFailed) {
+          yield RemoteImagesError(dataState.error!);
+        }
       }
     });
   }

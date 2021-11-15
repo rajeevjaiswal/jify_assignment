@@ -56,7 +56,7 @@ class GalleryView extends StatelessWidget {
               }
 
               if (state is RemoteImagesEmpty) {
-                return  Center(child: Text("${state.message}"));
+                return Center(child: Text("${state.message}"));
               }
 
               if (state is RemoteImagesLoading) {
@@ -88,8 +88,11 @@ class GalleryView extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 14),
                 child: CupertinoActivityIndicator(),
               )
-            : ImageListItem(
-                image: state.images[index],
+            : GestureDetector(
+                onTap: () => _onImagePressed(context, state.images[index]),
+                child: ImageListItem(
+                  image: state.images[index],
+                ),
               );
       },
       separatorBuilder: (context, index) {
@@ -125,6 +128,10 @@ class GalleryView extends StatelessWidget {
     _textController.text = '';
     final remoteImageBloc = BlocProvider.of<RemoteImagesBloc>(context);
     remoteImageBloc.add(GetImages(_textController.text));
+  }
+
+  void _onImagePressed(BuildContext context, im.Image image) {
+    Navigator.pushNamed(context, '/ImageDetailView', arguments: image);
   }
 }
 
