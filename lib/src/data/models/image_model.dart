@@ -22,14 +22,14 @@ class ImageModel extends Image {
 
   factory ImageModel.fromJson(Map<String, dynamic> map) {
     return ImageModel(
-      id: map['id'] as int,
-      tags: map['tags'] as String,
-      views: map['views'] as int,
-      downloads: map['downloads'] as int,
-      likes: map['likes'] as int,
-      comments: map['comments'] as int,
-      previewUrl: map['previewUrl'] as String,
-      imageUrl: map['largeImageURL'] as String,
+      id: map['id'],
+      tags: map['tags'],
+      views: map['views'],
+      downloads: map['downloads'],
+      likes: map['likes'],
+      comments: map['comments'],
+      previewUrl: map['previewURL'],
+      imageUrl: map['largeImageURL'],
     );
   }
 }

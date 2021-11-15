@@ -8,5 +8,10 @@ abstract class RemoteImagesEvent extends Equatable {
 }
 
 class GetImages extends RemoteImagesEvent {
-  const GetImages();
+  final String query;
+  final bool isLoadMore;
+  const GetImages(this.query, {this.isLoadMore = false});
+
+  @override
+  List<Object> get props => [query, isLoadMore];
 }

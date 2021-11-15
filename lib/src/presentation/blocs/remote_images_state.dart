@@ -1,26 +1,52 @@
 part of 'remote_images_bloc.dart';
 
 abstract class RemoteImagesState extends Equatable {
-  final List<Image>? images;
-  final bool? noMoreData;
-
-  final DioError? error;
-
-  const RemoteImagesState({this.images, this.noMoreData, this.error});
+  const RemoteImagesState();
 
   @override
-  List<Object> get props => [images!, noMoreData!, error!];
+  List<Object> get props => [];
 }
 
 class RemoteImagesLoading extends RemoteImagesState {
   const RemoteImagesLoading() : super();
 }
 
+class RemoteImagesInitial extends RemoteImagesState {
+  const RemoteImagesInitial() : super();
+}
+
 class RemoteImagesDone extends RemoteImagesState {
-  const RemoteImagesDone(List<Image> images, {bool? noMoreData})
-      : super(images: images, noMoreData: noMoreData);
+  final List<Image> images;
+  final bool noMoreData;
+  const RemoteImagesDone(this.images, this.noMoreData);
+
+  @override
+  List<Object> get props => [images, noMoreData];
+
+  @override
+  String toString() => 'SearchStateSuccess { items: ${images.length} }';
 }
 
 class RemoteImagesError extends RemoteImagesState {
-  const RemoteImagesError(DioError error) : super(error: error);
+  final DioError error;
+
+  const RemoteImagesError(this.error);
+
+  @override
+  List<Object> get props => [error];
+
+  @override
+  String toString() => 'Search Error  ${error.message}';
+}
+
+class RemoteImagesEmpty extends RemoteImagesState {
+  final String message;
+
+  const RemoteImagesEmpty(this.message);
+
+  @override
+  List<Object> get props => [message];
+
+  @override
+  String toString() => 'message  ${message}';
 }

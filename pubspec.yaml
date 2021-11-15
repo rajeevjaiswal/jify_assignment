@@ -30,7 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # service locator for injecting dependency
-  get_it: ^5.0.3
+  get_it: ^7.2.0
 
   # Wrapper around Dio for handling network request
   retrofit: ^2.0.0
@@ -40,6 +40,12 @@ dependencies:
 
   # to check equality with no boiler code
   equatable: ^2.0.3
+
+  # cache network image
+  cached_network_image: ^3.1.0+1
+
+  # rxDart
+  rxdart: ^0.27.2
 
 dev_dependencies:
   flutter_test:

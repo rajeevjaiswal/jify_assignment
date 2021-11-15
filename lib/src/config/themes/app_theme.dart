@@ -7,7 +7,7 @@ class AppTheme {
     return ThemeData(
       appBarTheme: const AppBarTheme(
         elevation: 0,
-        color: Colors.white,
+        color: Colors.blue,
       ),
       scaffoldBackgroundColor: Colors.white,
       primaryColor: Colors.black,

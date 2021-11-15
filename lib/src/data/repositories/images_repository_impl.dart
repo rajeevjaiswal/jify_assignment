@@ -18,7 +18,7 @@ class ImagesRepositoryImpl implements ImagesRepository {
   }) async {
     try {
       final httpResponse = await _imagesApiService.getImagesArticles(
-        apiKey: params.apiKey,
+        apiKey: params.apiKey!,
         query: params.query!,
         page: params.page,
         pageSize: params.pageSize,
@@ -36,6 +36,7 @@ class ImagesRepositoryImpl implements ImagesRepository {
         ),
       );
     } on DioError catch (e) {
+      print("error ${e.toString()}");
       return DataFailed(e);
     }
   }

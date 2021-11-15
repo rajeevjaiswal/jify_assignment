@@ -10,7 +10,7 @@ part 'images_api_service.g.dart';
 abstract class ImagesApiService {
   factory ImagesApiService(Dio dio, {String baseUrl}) = _ImagesApiService;
 
-  @GET('/api/')
+  @GET('/api')
   Future<HttpResponse<ImagesResponseModel>> getImagesArticles({
     @Query("key") required String apiKey,
     @Query("q") required String query,
